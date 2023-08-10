@@ -4,8 +4,8 @@ import './Meme.scss'
 
 export default function Meme() {
     const [meme, setMeme] = useState({
-        topText: '',
-        bottomText: '',
+        topText: 'One does not simply',
+        bottomText: 'Walk into Mordor',
         randomImage: 'http://i.imgflip.com/1bij.jpg',
     })
     const [allMemeImages, setAllMemeImages] = useState(memesData)
@@ -20,13 +20,36 @@ export default function Meme() {
             randomImage: url
         }))
     }
+    function handleChange(event) {
+        const {name, value} = event.target
+        setMeme(prevChange => ({
+            ...prevChange,
+            [name]: value
+        }))
+    }
     return (
         <main>
             <form>
-                <input type="text" placeholder="Top text" />
-                <input type="text" placeholder="Bottom text" />
+                <input 
+                    type="text"
+                    name="topText"
+                    value={meme.topText} 
+                    placeholder="Top text"
+                    onChange={handleChange} 
+                />
+                <input 
+                    type="text" 
+                    name="bottomText" 
+                    value={meme.bottomText}
+                    placeholder="Bottom text"
+                    onChange={handleChange} 
+                />
                 <button onClick={getMemeImage}>Get a new meme image 🖼️</button>
-                <img src={meme.randomImage} />
+                <div className="meme">
+                    <img src={meme.randomImage} />
+                    <h2 className="meme-text top">{meme.topText}</h2>
+                    <h2 className="meme-text bottom">{meme.bottomText}</h2>
+                </div>
             </form>
         </main>
     )
